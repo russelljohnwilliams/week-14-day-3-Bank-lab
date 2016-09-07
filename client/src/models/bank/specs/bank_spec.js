@@ -1,6 +1,7 @@
 var Bank = require('../bank');
 var Account = require('../account');
-var assert = require('assert');
+var assert = require('chai').assert;
+var mocha = require('mocha');
 
 describe('bank', function(){
   it('should start off with no bank accounts ', function(){

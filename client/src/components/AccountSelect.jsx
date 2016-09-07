@@ -25,7 +25,7 @@ var AccountSelect = React.createClass({
 
   render:function(){
     return(
-        <form className="accountForm" onSubmit={this.handleSubmit}>
+        <form className="selectAccount" onSubmit={this.handleSubmit}>
         <input
         type="text"
         placeholder="enter account name"

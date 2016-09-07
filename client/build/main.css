@@ -1,23 +1,31 @@
+html{
+  background: url('http://www.cfau-pd.net/images/money-wallpaper/money-wallpaper-7.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center top;
+  background-attachment: fixed;
+}
+
 body{
   font-family: Verdana;
-  background-color: lightgrey;
+  padding: 50px;
+
 }
 
 .counterBox{
-  border: 2px solid mediumaquamarine;
   border-radius: 5px;
-  padding: 10px;
+  padding: 7px;
   margin: 5px auto;
-  width: 400px;
-  font-size: 20px;
+  height: 25px;
+  width: 200px;
+  font-size: 12px;
   text-align: center;
 }
 
 .button{
   padding: 7px;
   width: 150px;
-  border-radius: 2px;
-  font-size: 20px;
+  font-size: 12px;
   background-color: grey;
 }
 
@@ -25,12 +33,30 @@ body{
   background-color: mediumaquamarine;
 }  
 
+
+button{
+  margin-top: 30px;
+  margin-left: 20px;
+  padding: 7px;
+  width: 150px;
+  font-size: 12px;
+  background-color: grey;
+  border: 2px solid black;
+}
+
 input{  border: 2px solid black;
-  border-radius: 2px;
   padding: 7px;
   margin:20px;
   width: 200px;
-  font-size: 20px;
+  font-size: 12px;
   text-align: center;
+}
 
+
+form{
+  text-align: center;
+  padding:0;
+  margin: 50px;
+  border: 1px solid black;
+  width: 400px;
 }

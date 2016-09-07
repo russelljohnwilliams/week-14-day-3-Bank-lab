@@ -21463,6 +21463,10 @@
 	    this.state.bank.addAccount(account);
 	  },
 	
+	  payInterest: function payInterest() {
+	    this.state.bank.payInterest();
+	  },
+	
 	  render: function render() {
 	    return React.createElement(
 	      'div',
@@ -21472,9 +21476,14 @@
 	        null,
 	        ' Bank'
 	      ),
-	      React.createElement(AccountSelect, { onCommentSubmit: this.handleOwnerSubmit }),
 	      React.createElement(AccountDetails, { account: this.state.selectedAccount }),
-	      React.createElement(AddAccountForm, { onAccountSubmit: this.handleAccountSubmit })
+	      React.createElement(AccountSelect, { onCommentSubmit: this.handleOwnerSubmit }),
+	      React.createElement(AddAccountForm, { onAccountSubmit: this.handleAccountSubmit }),
+	      React.createElement(
+	        'button',
+	        { onClick: this.payInterest, className: 'button' },
+	        ' pay interest '
+	      )
 	    );
 	  }
 	
@@ -21515,7 +21524,7 @@
 	  render: function render() {
 	    return React.createElement(
 	      'form',
-	      { className: 'accountForm', onSubmit: this.handleSubmit },
+	      { className: 'selectAccount', onSubmit: this.handleSubmit },
 	      React.createElement('input', {
 	        type: 'text',
 	        placeholder: 'enter account name',
@@ -21626,14 +21635,14 @@
 	    if (!owner || !type || !details) {
 	      return;
 	    }
-	    this.props.onAccountSubmit({ owner: owner, amount: amount, type: type, details: details });
+	    this.props.onAccountSubmit({ owner: owner, amount: parseInt(amount), type: type, details: details });
 	    this.setState({ owner: '', amount: 0, type: '', details: '' });
 	  },
 	
 	  render: function render() {
 	    return React.createElement(
 	      'form',
-	      { className: 'accountForm', onSubmit: this.handleSubmit },
+	      { className: 'accForm', onSubmit: this.handleSubmit },
 	      React.createElement('input', {
 	        type: 'text',
 	        placeholder: 'enter account name',

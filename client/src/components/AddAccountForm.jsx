@@ -35,13 +35,13 @@ var AddAccountForm = React.createClass({
     if( !owner || !type || !details ){
       return;
     }
-    this.props.onAccountSubmit({owner: owner, amount: amount, type: type, details: details})
+    this.props.onAccountSubmit({owner: owner, amount: parseInt(amount), type: type, details: details})
     this.setState({owner:'', amount:0, type:'', details:''})
   },
 
   render:function(){
     return(
-      <form className="accountForm" onSubmit={this.handleSubmit}>
+      <form className="accForm" onSubmit={this.handleSubmit}>
       <input
       type="text"
       placeholder="enter account name"
