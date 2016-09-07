@@ -1,5 +1,6 @@
 body{
   font-family: Verdana;
+  background-color: lightgrey;
 }
 
 .counterBox{
@@ -12,14 +13,24 @@ body{
   text-align: center;
 }
 
-button{
-  padding: 10px;
+.button{
+  padding: 7px;
   width: 150px;
-  border-radius: 10px;
+  border-radius: 2px;
   font-size: 20px;
-  background-color: tomato;
+  background-color: grey;
 }
 
-button:hover{
+.button:hover{
   background-color: mediumaquamarine;
 }  
+
+input{  border: 2px solid black;
+  border-radius: 2px;
+  padding: 7px;
+  margin:20px;
+  width: 200px;
+  font-size: 20px;
+  text-align: center;
+
+}

@@ -1,6 +1,8 @@
 var React = require('react');
 var AccountSelect = require ('./AccountSelect')
 var AccountDetails = require('./AccountDetails')
+var AddAccountForm = require('./AddAccountForm')
+
 var Bank = require('../models/bank/bank')
 
 
@@ -8,30 +10,26 @@ var Bank = require('../models/bank/bank')
 var BankBox = React.createClass({
 
 getInitialState: function(){
-  var sampleData = [{ owner: "Nico", amount: 1000, type:"personal" }, { owner: "Russell", amount: 500, type:"business" }]
+  var sampleData = [{ owner: "Nico", amount: 1000, type:"personal", details:"alert" }, { owner: "Russell", amount: 500, type:"business", details:"gold star customer" }]
   var bank = new Bank()
 
-  //add some accounts to the bank
   bank.addAccount(sampleData[0]);
   bank.addAccount(sampleData[1]);
-  // console.log(sampleData[0]) 
-  // console.log(sampleData[1]) 
-  //loop and add accounts to bank
 
   return {bank: bank, selectedAccount: null}
 },
 
 
-
-
 handleOwnerSubmit: function(owner){
-  // var owners = this.state.accounts.owner;
   var result = this.state.bank.findAccountByOwnerName(owner);
   console.log(result);
   this.setState({selectedAccount: result})
 },
 
 
+handleAccountSubmit: function(account){
+  this.state.bank.addAccount(account);
+},
 
 render: function(){
   return(
@@ -39,6 +37,7 @@ render: function(){
     <h1> Bank</h1>
     <AccountSelect onCommentSubmit={this.handleOwnerSubmit}/>
     <AccountDetails account={this.state.selectedAccount}/>
+    <AddAccountForm onAccountSubmit={this.handleAccountSubmit}/>
     </div>
     )
 }

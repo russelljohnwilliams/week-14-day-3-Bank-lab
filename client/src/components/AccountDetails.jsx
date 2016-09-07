@@ -8,9 +8,10 @@ if(!props.account){
 }
 return(
   <div>
-  <h4>{props.account.owner}</h4>
-  <p>{props.account.amount}</p>
-  <p>{props.account.type}</p>
+  <h4>Account holder Name : {props.account.owner}</h4>
+  <p>Account Value : £{props.account.amount}</p>
+  <p>Account Type: {props.account.type}</p>
+  <p>Account Details: {props.account.details}</p>
   </div>
   )
 

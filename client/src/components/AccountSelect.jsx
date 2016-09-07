@@ -33,6 +33,7 @@ var AccountSelect = React.createClass({
         onChange={this.handleOwnerChange}
         />
         <input
+        className ='button'
         type="submit"
         value="post"
         />

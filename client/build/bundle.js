@@ -21434,32 +21434,33 @@
 	
 	var React = __webpack_require__(1);
 	var AccountSelect = __webpack_require__(173);
-	var AccountDetails = __webpack_require__(175);
-	var Bank = __webpack_require__(174);
+	var AccountDetails = __webpack_require__(174);
+	var AddAccountForm = __webpack_require__(175);
+	
+	var Bank = __webpack_require__(176);
 	
 	var BankBox = React.createClass({
 	  displayName: 'BankBox',
 	
 	
 	  getInitialState: function getInitialState() {
-	    var sampleData = [{ owner: "Nico", amount: 1000, type: "personal" }, { owner: "Russell", amount: 500, type: "business" }];
+	    var sampleData = [{ owner: "Nico", amount: 1000, type: "personal", details: "alert" }, { owner: "Russell", amount: 500, type: "business", details: "gold star customer" }];
 	    var bank = new Bank();
 	
-	    //add some accounts to the bank
 	    bank.addAccount(sampleData[0]);
 	    bank.addAccount(sampleData[1]);
-	    // console.log(sampleData[0]) 
-	    // console.log(sampleData[1]) 
-	    //loop and add accounts to bank
 	
 	    return { bank: bank, selectedAccount: null };
 	  },
 	
 	  handleOwnerSubmit: function handleOwnerSubmit(owner) {
-	    // var owners = this.state.accounts.owner;
 	    var result = this.state.bank.findAccountByOwnerName(owner);
 	    console.log(result);
 	    this.setState({ selectedAccount: result });
+	  },
+	
+	  handleAccountSubmit: function handleAccountSubmit(account) {
+	    this.state.bank.addAccount(account);
 	  },
 	
 	  render: function render() {
@@ -21472,7 +21473,8 @@
 	        ' Bank'
 	      ),
 	      React.createElement(AccountSelect, { onCommentSubmit: this.handleOwnerSubmit }),
-	      React.createElement(AccountDetails, { account: this.state.selectedAccount })
+	      React.createElement(AccountDetails, { account: this.state.selectedAccount }),
+	      React.createElement(AddAccountForm, { onAccountSubmit: this.handleAccountSubmit })
 	    );
 	  }
 	
@@ -21521,6 +21523,7 @@
 	        onChange: this.handleOwnerChange
 	      }),
 	      React.createElement('input', {
+	        className: 'button',
 	        type: 'submit',
 	        value: 'post'
 	      })
@@ -21533,6 +21536,142 @@
 
 /***/ },
 /* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	
+	var AccountDetails = function AccountDetails(props) {
+	
+	  if (!props.account) {
+	    return React.createElement(
+	      'h4',
+	      null,
+	      'please search for an account'
+	    );
+	  }
+	  return React.createElement(
+	    'div',
+	    null,
+	    React.createElement(
+	      'h4',
+	      null,
+	      'Account holder Name : ',
+	      props.account.owner
+	    ),
+	    React.createElement(
+	      'p',
+	      null,
+	      'Account Value : £',
+	      props.account.amount
+	    ),
+	    React.createElement(
+	      'p',
+	      null,
+	      'Account Type: ',
+	      props.account.type
+	    ),
+	    React.createElement(
+	      'p',
+	      null,
+	      'Account Details: ',
+	      props.account.details
+	    )
+	  );
+	};
+	
+	module.exports = AccountDetails;
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	
+	var AddAccountForm = React.createClass({
+	  displayName: 'AddAccountForm',
+	
+	
+	  getInitialState: function getInitialState() {
+	    return { owner: '', amount: 0, type: '', details: '' };
+	  },
+	
+	  handleOwnerChange: function handleOwnerChange(e) {
+	    this.setState({ owner: e.target.value });
+	  },
+	
+	  handleAmountChange: function handleAmountChange(e) {
+	    this.setState({ amount: e.target.value });
+	  },
+	
+	  handleTypeChange: function handleTypeChange(e) {
+	    this.setState({ type: e.target.value });
+	  },
+	
+	  handleDetailsChange: function handleDetailsChange(e) {
+	    this.setState({ details: e.target.value });
+	  },
+	
+	  handleSubmit: function handleSubmit(e) {
+	    e.preventDefault();
+	
+	    var owner = this.state.owner.trim();
+	    var amount = this.state.amount;
+	    var type = this.state.type.trim();
+	    var details = this.state.details.trim();
+	
+	    if (!owner || !type || !details) {
+	      return;
+	    }
+	    this.props.onAccountSubmit({ owner: owner, amount: amount, type: type, details: details });
+	    this.setState({ owner: '', amount: 0, type: '', details: '' });
+	  },
+	
+	  render: function render() {
+	    return React.createElement(
+	      'form',
+	      { className: 'accountForm', onSubmit: this.handleSubmit },
+	      React.createElement('input', {
+	        type: 'text',
+	        placeholder: 'enter account name',
+	        value: this.state.owner,
+	        onChange: this.handleOwnerChange
+	      }),
+	      React.createElement('input', {
+	        type: 'number',
+	        placeholder: 'enter total funds',
+	        value: this.state.amount,
+	        onChange: this.handleAmountChange
+	      }),
+	      React.createElement('input', {
+	        type: 'text',
+	        placeholder: 'enter account type',
+	        value: this.state.type,
+	        onChange: this.handleTypeChange
+	      }),
+	      React.createElement('input', {
+	        type: 'text',
+	        placeholder: 'enter account details',
+	        value: this.state.details,
+	        onChange: this.handleDetailsChange
+	      }),
+	      React.createElement('input', {
+	        className: 'button',
+	        type: 'submit',
+	        value: 'Post'
+	      })
+	    );
+	  }
+	
+	});
+	
+	module.exports = AddAccountForm;
+
+/***/ },
+/* 176 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -21545,6 +21684,7 @@
 	  addAccount: function addAccount(account) {
 	    this.accounts.push(account);
 	  },
+	
 	  findAccountByOwnerName: function findAccountByOwnerName(ownerName) {
 	    var foundAccount = null;
 	    var _iteratorNormalCompletion = true;
@@ -21576,6 +21716,7 @@
 	
 	    return foundAccount;
 	  },
+	
 	  filteredAccounts: function filteredAccounts(type) {
 	    if (!type) return this.accounts;
 	    var filteredAccounts = [];
@@ -21606,6 +21747,7 @@
 	
 	    return filteredAccounts;
 	  },
+	
 	  totalCash: function totalCash(type) {
 	    var total = 0;
 	    var _iteratorNormalCompletion3 = true;
@@ -21635,52 +21777,41 @@
 	
 	    return total;
 	  },
+	
 	  accountAverage: function accountAverage() {
 	    return this.totalCash() / this.accounts.length;
+	  },
+	
+	  payInterest: function payInterest() {
+	    var _iteratorNormalCompletion4 = true;
+	    var _didIteratorError4 = false;
+	    var _iteratorError4 = undefined;
+	
+	    try {
+	      for (var _iterator4 = this.accounts[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+	        var account = _step4.value;
+	
+	        var interest = account.amount * 10 / 100;
+	        account.amount += interest;
+	      }
+	    } catch (err) {
+	      _didIteratorError4 = true;
+	      _iteratorError4 = err;
+	    } finally {
+	      try {
+	        if (!_iteratorNormalCompletion4 && _iterator4.return) {
+	          _iterator4.return();
+	        }
+	      } finally {
+	        if (_didIteratorError4) {
+	          throw _iteratorError4;
+	        }
+	      }
+	    }
 	  }
 	};
 	
 	module.exports = Bank;
-
-/***/ },
-/* 175 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	
-	var AccountDetails = function AccountDetails(props) {
-	
-	  if (!props.account) {
-	    return React.createElement(
-	      'h4',
-	      null,
-	      'please search for an account'
-	    );
-	  }
-	  return React.createElement(
-	    'div',
-	    null,
-	    React.createElement(
-	      'h4',
-	      null,
-	      props.account.owner
-	    ),
-	    React.createElement(
-	      'p',
-	      null,
-	      props.account.amount
-	    ),
-	    React.createElement(
-	      'p',
-	      null,
-	      props.account.type
-	    )
-	  );
-	};
-	
-	module.exports = AccountDetails;
 
 /***/ }
 /******/ ]);
